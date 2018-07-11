@@ -6,6 +6,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,6 +16,7 @@ import com.kewenc.deskmemo.R;
 import com.kewenc.deskmemo.RecyclerAdapter;
 import com.kewenc.deskmemo.presenter.AddMemoPresenter;
 import com.kewenc.deskmemo.presenter.BaseActivity;
+import com.kewenc.deskmemo.util.AnalysisDataUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +43,15 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         setContentView(R.layout.activity_memo_add);
         initViews();
         addMemopresenter.AddEdit(data, dataType);
+
+        //Test
+        AnalysisDataUtil analysisDataUtil = new AnalysisDataUtil();
+        String str = "<kctxt>Hello Desk Memo !</kctxt><kcimg>/Android/com/kewenc/deskmemo/img01</kcimg><kctxt>Hello Desk Memo !</kctxt><kcvoi>/Android/com/kewenc/deskmemo/voi01</kcvoi><kcvid>/Android/com/kewenc/deskmemo/vid01</kcvid>";
+        List<Integer> listData = analysisDataUtil.getData(str);
+        for (int i =0;i<listData.size();i+=3){
+            Log.e("TAGF", listData.get(i+1)+"_"+str.substring(listData.get(i)+7, listData.get(i+2))+"\n");
+//            Log.e("TAGF", listData.get(i)+"_"+listData.get(i+1)+"_"+listData.get(i+2)+"\n");
+        }
     }
 
     private void initViews() {
