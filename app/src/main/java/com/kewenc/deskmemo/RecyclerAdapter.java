@@ -31,6 +31,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        TextView textView = new TextView(holder.itemView.getContext());
+
         holder.itemView.removeAllViews();
         int Type = dataType.get(position);
         if (Type == 0){
@@ -63,6 +65,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             ViewHolder.this.itemView = (RelativeLayout) itemView;
             editText = new EditText(itemView.getContext());
             imageView = new ImageView(itemView.getContext());
+
 //            textView.setVisibility(View.GONE);
 //            editText.setVisibility(View.GONE);
 //            imageView.setVisibility(View.GONE);

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 18-7-12 下午11:01 Author@KewenC
+ */
+
 package com.kewenc.deskmemo.view;
 
 import android.os.Bundle;
@@ -11,13 +15,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
-
 import com.kewenc.deskmemo.R;
 import com.kewenc.deskmemo.RecyclerAdapter;
 import com.kewenc.deskmemo.presenter.AddMemoPresenter;
 import com.kewenc.deskmemo.presenter.BaseActivity;
 import com.kewenc.deskmemo.util.AnalysisDataUtil;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,15 +45,14 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         setContentView(R.layout.activity_memo_add);
         initViews();
         addMemopresenter.AddEdit(data, dataType);
-
-        //Test
-        AnalysisDataUtil analysisDataUtil = new AnalysisDataUtil();
-        String str = "<kctxt>Hello Desk Memo !</kctxt><kcimg>/Android/com/kewenc/deskmemo/img01</kcimg><kctxt>Hello Desk Memo !</kctxt><kcvoi>/Android/com/kewenc/deskmemo/voi01</kcvoi><kcvid>/Android/com/kewenc/deskmemo/vid01</kcvid>";
-        List<Integer> listData = analysisDataUtil.getData(str);
-        for (int i =0;i<listData.size();i+=3){
-            Log.e("TAGF", listData.get(i+1)+"_"+str.substring(listData.get(i)+7, listData.get(i+2))+"\n");
-//            Log.e("TAGF", listData.get(i)+"_"+listData.get(i+1)+"_"+listData.get(i+2)+"\n");
-        }
+//        //Test
+//        AnalysisDataUtil analysisDataUtil = new AnalysisDataUtil();
+//        String str = "<kctxt>Hello Desk Memo !</kctxt><kcimg>/Android/com/kewenc/deskmemo/img01</kcimg><kctxt>Hello Desk Memo !</kctxt><kcvoi>/Android/com/kewenc/deskmemo/voi01</kcvoi><kcvid>/Android/com/kewenc/deskmemo/vid01</kcvid>";
+//        List<Integer> listData = analysisDataUtil.getData(str);
+//        for (int i =0;i<listData.size();i+=3){
+//            Log.e("TAGF", listData.get(i+1)+"_"+str.substring(listData.get(i)+7, listData.get(i+2))+"\n");
+////            Log.e("TAGF", listData.get(i)+"_"+listData.get(i+1)+"_"+listData.get(i+2)+"\n");
+//        }
     }
 
     private void initViews() {
@@ -71,6 +72,7 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         recView.setLayoutManager(linearLayoutManager);
         recView.setHasFixedSize(true);
+
         recyclerAdapter = new RecyclerAdapter(data, dataType);
         recView.setAdapter(recyclerAdapter);
     }
@@ -82,7 +84,7 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
             case R.id.btnEdit:
                 addMemopresenter.AddEdit(data, dataType);
                 break;
-                case R.id.btnImage:
+            case R.id.btnImage:
                 addMemopresenter.AddImage(data, dataType);
                 break;
             case R.id.btnVoice:
