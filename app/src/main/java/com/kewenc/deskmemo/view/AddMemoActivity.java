@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPresenter>
-        implements AddMemoInterface ,View.OnClickListener{
+        implements AddMemoInterface ,View.OnClickListener, RecyclerAdapter.OnItemClickListener{
     private AddMemoPresenter addMemopresenter;
     private Toolbar toolBar;
     private RecyclerView recView;
@@ -69,12 +69,13 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         btnVideo.setOnClickListener(this);
 
         recView = findViewById(R.id.recView);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        recView.setLayoutManager(linearLayoutManager);
+        recView.setLayoutManager(new LinearLayoutManager(this));
         recView.setHasFixedSize(true);
 
         recyclerAdapter = new RecyclerAdapter(data, dataType);
+        recyclerAdapter.setOnTtemClickListener(this);
         recView.setAdapter(recyclerAdapter);
+
     }
 
     @Override
@@ -119,5 +120,10 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
             recyclerAdapter.notifyDataSetChanged();
             recView.scrollToPosition(size - 1);
         }
+    }
+
+    @Override
+    public void onItemClick(View view, int position) {
+
     }
 }
