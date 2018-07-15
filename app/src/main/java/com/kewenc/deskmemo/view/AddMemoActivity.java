@@ -44,7 +44,7 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo_add);
         initViews();
-        addMemopresenter.AddEdit(data, dataType);
+        addMemopresenter.AddEdit(data, dataType, "");
 //        //Test
 //        AnalysisDataUtil analysisDataUtil = new AnalysisDataUtil();
 //        String str = "<kctxt>Hello Desk Memo !</kctxt><kcimg>/Android/com/kewenc/deskmemo/img01</kcimg><kctxt>Hello Desk Memo !</kctxt><kcvoi>/Android/com/kewenc/deskmemo/voi01</kcvoi><kcvid>/Android/com/kewenc/deskmemo/vid01</kcvid>";
@@ -83,16 +83,16 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         int id = v.getId();
         switch (id){
             case R.id.btnEdit:
-                addMemopresenter.AddEdit(data, dataType);
+                addMemopresenter.AddEdit(data, dataType, "");
                 break;
             case R.id.btnImage:
-                addMemopresenter.AddImage(data, dataType);
+                addMemopresenter.AddImage(data, dataType, "");
                 break;
             case R.id.btnVoice:
-                addMemopresenter.AddVoice(data, dataType);
+                addMemopresenter.AddVoice(data, dataType, "");
                 break;
             case R.id.btnVideo:
-                addMemopresenter.AddVideo(data, dataType);
+                addMemopresenter.AddVideo(data, dataType, "");
                 break;
         }
     }

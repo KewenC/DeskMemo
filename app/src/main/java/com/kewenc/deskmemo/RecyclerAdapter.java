@@ -1,7 +1,12 @@
 package com.kewenc.deskmemo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import java.io.File;
 import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
@@ -31,21 +38,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        TextView textView = new TextView(holder.itemView.getContext());
+//        TextView textView = new TextView(holder.itemView.getContext());
 
         holder.itemView.removeAllViews();
-        int Type = dataType.get(position);
-        if (Type == 0){
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        int type = dataType.get(position);
+        if (type == 0){
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             holder.editText.setText(data.get(0));
             holder.itemView.addView(holder.editText,layoutParams);
-        } else if (Type == 1){
+        } else if (type == 1){
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            holder.imageView.setImageResource(R.mipmap.ic_launcher);
+            File file = new File(data.get(0));
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
+            holder.imageView.setImageBitmap(bitmap);
             holder.itemView.addView(holder.imageView, layoutParams);
-        } else {
-            holder.imageView.setImageResource(R.mipmap.ic_launcher);
-            holder.itemView.addView(holder.imageView);
+        } else if(type == 2){
+
+        } else if (type == 3){
+
         }
     }
 
@@ -54,7 +64,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, TextWatcher{
 
         private EditText editText;
         private ImageView imageView;
@@ -65,6 +75,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             ViewHolder.this.itemView = (RelativeLayout) itemView;
             editText = new EditText(itemView.getContext());
             imageView = new ImageView(itemView.getContext());
+
+            editText.addTextChangedListener(this);
 
 //            textView.setVisibility(View.GONE);
 //            editText.setVisibility(View.GONE);
@@ -79,6 +91,21 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             if (onItemClickListener != null){
                 onItemClickListener.onItemClick(v,getAdapterPosition());
             }
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            Log.e("TAGF", String.valueOf(s));
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
         }
     }
 

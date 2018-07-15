@@ -15,10 +15,10 @@ import java.util.List;
  *  <kcvid>/Android/com/kewenc/deskmemo/vid01</kcvid>
  */
 public class AnalysisDataUtil {
-    private static final int KCTXT_MARK = 0;
-    private static final int KCIMG_MARK = 1;
-    private static final int KCVOI_MARK = 2;
-    private static final int KCVID_MARK = 3;
+    public static final int KCTXT_MARK = 0;
+    public static final int KCIMG_MARK = 1;
+    public static final int KCVOI_MARK = 2;
+    public static final int KCVID_MARK = 3;
 
     private static final String KCTXT = "<kctxt>";
     private static final String KCIMG = "<kcimg>";
