@@ -126,4 +126,9 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
     public void onItemClick(View view, int position) {
 
     }
+
+    @Override
+    public void refreshData(String str, int position) {
+        data.set(position, str);
+    }
 }

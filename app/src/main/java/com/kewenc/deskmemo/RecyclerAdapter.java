@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 18-7-18 下午12:32 Author@KewenC
+ */
+
 package com.kewenc.deskmemo;
 
 import android.graphics.Bitmap;
@@ -37,7 +41,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
 //        TextView textView = new TextView(holder.itemView.getContext());
 
         holder.itemView.removeAllViews();
@@ -45,6 +49,25 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         if (type == 0){
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             holder.editText.setText(data.get(0));
+            holder.editText.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    data.set(position, String.valueOf(s));
+                    if (onItemClickListener != null){
+                        onItemClickListener.refreshData(String.valueOf(s), position);
+                    }
+                }
+
+                @Override
+                public void afterTextChanged(Editable s) {
+
+                }
+            });
             holder.itemView.addView(holder.editText,layoutParams);
         } else if (type == 1){
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -64,7 +87,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, TextWatcher{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private EditText editText;
         private ImageView imageView;
@@ -76,7 +99,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             editText = new EditText(itemView.getContext());
             imageView = new ImageView(itemView.getContext());
 
-            editText.addTextChangedListener(this);
+//            editText.addTextChangedListener(this);
 
 //            textView.setVisibility(View.GONE);
 //            editText.setVisibility(View.GONE);
@@ -92,25 +115,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 onItemClickListener.onItemClick(v,getAdapterPosition());
             }
         }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            Log.e("TAGF", String.valueOf(s));
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
     }
 
     public interface OnItemClickListener{
         void onItemClick(View view, int position);
+        void refreshData(String str, int position);
     }
 
     public void setOnTtemClickListener(OnItemClickListener onItemClickListener){
