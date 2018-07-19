@@ -44,7 +44,8 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_memo_add);
         initViews();
-        addMemopresenter.AddEdit(data, dataType, "");
+//        addMemopresenter.AddEdit(data, dataType, "");
+
 //        //Test
 //        AnalysisDataUtil analysisDataUtil = new AnalysisDataUtil();
 //        String str = "<kctxt>Hello Desk Memo !</kctxt><kcimg>/Android/com/kewenc/deskmemo/img01</kcimg><kctxt>Hello Desk Memo !</kctxt><kcvoi>/Android/com/kewenc/deskmemo/voi01</kcvoi><kcvid>/Android/com/kewenc/deskmemo/vid01</kcvid>";
@@ -73,7 +74,7 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
         recView.setHasFixedSize(true);
 
         recyclerAdapter = new RecyclerAdapter(data, dataType);
-        recyclerAdapter.setOnTtemClickListener(this);
+        recyclerAdapter.setOnItemClickListener(this);
         recView.setAdapter(recyclerAdapter);
 
     }
@@ -129,6 +130,6 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
 
     @Override
     public void refreshData(String str, int position) {
-        data.set(position, str);
+//        data.set(position, str);
     }
 }

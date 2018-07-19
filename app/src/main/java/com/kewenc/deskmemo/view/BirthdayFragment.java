@@ -32,4 +32,5 @@ public class BirthdayFragment extends BaseFragment<BirthdayInterface,BirthdayPre
         return view;
     }
 
+
 }

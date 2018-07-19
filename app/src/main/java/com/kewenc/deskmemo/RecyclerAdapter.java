@@ -46,9 +46,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         holder.itemView.removeAllViews();
         int type = dataType.get(position);
+        Log.e("TAGF","position = "+position);
         if (type == 0){
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            holder.editText.setText(data.get(0));
+            holder.editText.setText(data.get(position));
             holder.editText.addTextChangedListener(new TextWatcher() {
                 @Override
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -57,6 +58,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
                 @Override
                 public void onTextChanged(CharSequence s, int start, int before, int count) {
+                    Log.e("TAGF","onTextChanged_"+position+"__"+String.valueOf(s));
                     data.set(position, String.valueOf(s));
                     if (onItemClickListener != null){
                         onItemClickListener.refreshData(String.valueOf(s), position);
@@ -71,7 +73,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.itemView.addView(holder.editText,layoutParams);
         } else if (type == 1){
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            File file = new File(data.get(0));
+            File file = new File(data.get(position));
             Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
             holder.imageView.setImageBitmap(bitmap);
             holder.itemView.addView(holder.imageView, layoutParams);
@@ -87,7 +89,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return data.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder{
 
         private EditText editText;
         private ImageView imageView;
@@ -98,23 +100,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             ViewHolder.this.itemView = (RelativeLayout) itemView;
             editText = new EditText(itemView.getContext());
             imageView = new ImageView(itemView.getContext());
-
-//            editText.addTextChangedListener(this);
-
-//            textView.setVisibility(View.GONE);
-//            editText.setVisibility(View.GONE);
-//            imageView.setVisibility(View.GONE);
-//            textView = new TextView(itemView.getContext());
-//            ViewHolder.this.itemView.addView(textView);
-//            textView.setOnClickListener(this);
         }
-
-        @Override
-        public void onClick(View v) {
-            if (onItemClickListener != null){
-                onItemClickListener.onItemClick(v,getAdapterPosition());
-            }
-        }
+//
+//        @Override
+//        public void onClick(View v) {
+//            if (onItemClickListener != null){
+//                onItemClickListener.onItemClick(v,getAdapterPosition());
+//            }
+//        }
     }
 
     public interface OnItemClickListener{
@@ -122,7 +115,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         void refreshData(String str, int position);
     }
 
-    public void setOnTtemClickListener(OnItemClickListener onItemClickListener){
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
         this.onItemClickListener = onItemClickListener;
     }
 
