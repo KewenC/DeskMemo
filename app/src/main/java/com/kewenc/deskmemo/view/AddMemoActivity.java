@@ -4,6 +4,8 @@
 
 package com.kewenc.deskmemo.view;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.AppCompatButton;
@@ -23,8 +25,12 @@ import com.kewenc.deskmemo.util.AnalysisDataUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.kewenc.deskmemo.util.AnalysisDataUtil.LAT_Mark;
+import static com.kewenc.deskmemo.util.AnalysisDataUtil.PRE_Mark;
+
 public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPresenter>
         implements AddMemoInterface ,View.OnClickListener, RecyclerAdapter.OnItemClickListener{
+    private static final int REQUEST_CODE_PICK_IMAGE = 0;
     private AddMemoPresenter addMemopresenter;
     private Toolbar toolBar;
     private RecyclerView recView;
@@ -59,6 +65,8 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
     private void initViews() {
         toolBar = findViewById(R.id.toolBar);
         setSupportActionBar(toolBar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
 
         btnEdit = findViewById(R.id.btnEdit);
         btnImage = findViewById(R.id.btnImage);
@@ -87,7 +95,10 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
                 addMemopresenter.AddEdit(data, dataType, "");
                 break;
             case R.id.btnImage:
-                addMemopresenter.AddImage(data, dataType, "");
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");//相片类型
+                startActivityForResult(intent, REQUEST_CODE_PICK_IMAGE);
+//                addMemopresenter.AddImage(data, dataType, "");
                 break;
             case R.id.btnVoice:
                 addMemopresenter.AddVoice(data, dataType, "");
@@ -108,6 +119,10 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id){
+            case android.R.id.home:
+                mPresenter.saveData(data , dataType);
+                finish();
+                break;
             case R.id.menu_more:
                 Toast.makeText(this,"菜单",Toast.LENGTH_LONG).show();
                 break;
@@ -131,5 +146,29 @@ public class AddMemoActivity extends BaseActivity<AddMemoInterface, AddMemoPrese
     @Override
     public void refreshData(String str, int position) {
 //        data.set(position, str);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_PICK_IMAGE) {
+            if (data!=null) {
+                Uri uri = data.getData();
+
+                addMemopresenter.AddImage(this.data, dataType, String.valueOf(uri));
+
+                //to do find the path of pic by uri
+//                iv_1.setImageURI(uri);
+//                SharedPreferences.Editor editor = sp.edit();
+//                editor.putString("URI1", uri + "");
+//                editor.commit();
+//                Intent intent=new Intent();
+//                intent.setAction("com.kewenc.noti.action.fragmentb");
+//                Bundle bundle=new Bundle();
+//                bundle.putInt("FLAG_FRAGMENT",0);
+//                intent.putExtras(bundle);
+//                getContext().sendBroadcast(intent);
+            }
+        }
     }
 }

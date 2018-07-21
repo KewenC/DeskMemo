@@ -4,6 +4,8 @@
 
 package com.kewenc.deskmemo.util;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,10 +27,14 @@ public class AnalysisDataUtil {
     private static final String KCVOI = "<kcvoi>";
     private static final String KCVID = "<kcvid>";
 
+    public static final String[] PRE_Mark = {KCTXT, KCIMG, KCVOI, KCVID};
+
     private static final String KCTXT_END = "</kctxt>";
     private static final String KCIMG_END = "</kcimg>";
     private static final String KCVOI_END = "</kcvoi>";
     private static final String KCVID_END = "</kcvid>";
+
+    public static final String[] LAT_Mark = {KCTXT_END, KCIMG_END, KCVOI_END, KCVID_END};
 
     private static final int OFFSET = KCTXT.length();
     private static final int OFFSET_END = KCTXT_END.length();
@@ -89,5 +95,19 @@ public class AnalysisDataUtil {
             }
         }
         return indexList;
+    }
+
+    /**
+     * 打包数据
+     * @param data
+     * @param dataType
+     * @return
+     */
+    public String setData(List<String> data, List<Integer> dataType) {
+        String str = "";
+        for (int i = 0; i<data.size(); i++){
+            str += PRE_Mark[dataType.get(i)]+data.get(i)+LAT_Mark[dataType.get(i)];
+        }
+        return str;
     }
 }

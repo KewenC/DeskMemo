@@ -1,6 +1,9 @@
 package com.kewenc.deskmemo.presenter;
 
 import android.content.Context;
+import android.util.Log;
+
+import com.kewenc.deskmemo.util.AnalysisDataUtil;
 import com.kewenc.deskmemo.view.AddMemoInterface;
 
 import java.util.List;
@@ -42,5 +45,13 @@ public class AddMemoPresenter extends BasePresenter<AddMemoInterface> {
         data.add(str);
         dataType.add(KCVID_MARK);
         addMemoInterface.refresh(data.size());
+    }
+
+    public void saveData(List<String> data, List<Integer> dataType) {
+        AnalysisDataUtil analysisDataUtil = new AnalysisDataUtil();
+        analysisDataUtil.setData(data, dataType);
+        Log.e("TAGF",analysisDataUtil.setData(data, dataType));
+        //Model 保存数据到数据库中
+
     }
 }
