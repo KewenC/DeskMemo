@@ -76,12 +76,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             }
         } else if (type == 1){
 //            holder.imageView.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            File file = new File(data.get(position));
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+//            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            //            File file = new File(data.get(position));
 //            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
             Uri uri = Uri.parse(data.get(position));
+            holder.imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
             holder.imageView.setImageURI(uri);
-            holder.imageView.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
             holder.itemView.addView(holder.imageView, layoutParams);
         } else if(type == 2){
 
