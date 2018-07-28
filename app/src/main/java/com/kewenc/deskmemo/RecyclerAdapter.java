@@ -4,6 +4,7 @@
 
 package com.kewenc.deskmemo;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -71,18 +73,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             holder.editText.addTextChangedListener(watcher);
             holder.editText.setTag(watcher);
             holder.itemView.addView(holder.editText,layoutParams);
-            if (position == (getItemCount()-1)){
+            if (position == (getItemCount()-1)) {
                 holder.editText.requestFocus();
+                InputMethodManager imm = (InputMethodManager) holder.editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {//展示软件键盘
+                    imm.showSoftInput(holder.editText, InputMethodManager.RESULT_SHOWN);
+                    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+                }
             }
         } else if (type == 1){
 //            holder.imageView.setVisibility(View.VISIBLE);
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 //            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             //            File file = new File(data.get(position));
 //            Bitmap bitmap = BitmapFactory.decodeFile(file.getPath());
             Uri uri = Uri.parse(data.get(position));
-            holder.imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+            holder.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             holder.imageView.setImageURI(uri);
+            layoutParams.topMargin = layoutParams.bottomMargin = 8;
 
             holder.itemView.addView(holder.imageView, layoutParams);
         } else if(type == 2){
@@ -107,7 +115,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             super(itemView);
             ViewHolder.this.itemView = (RelativeLayout) itemView;
             editText = new EditText(itemView.getContext());
+            editText.setBackground(null);
             imageView = new ImageView(itemView.getContext());
+            imageView.setAdjustViewBounds(true);
 //            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 //            ViewHolder.this.itemView.addView(editText,layoutParams);
 //            ViewHolder.this.itemView.addView(imageView,layoutParams);
